@@ -20,6 +20,7 @@
     "vue": "^3.2.41"
   },
   "devDependencies": {
+    "@parcel/css": "^1.14.0",
     "esbuild": "^0.15.12"
   }
 }

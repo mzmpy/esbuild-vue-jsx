@@ -3,7 +3,7 @@ import {
   h, Fragment, ref
 } from 'vue'
 import { ElInput } from 'element-plus'
-import './index.css'
+import './App.css'
 
 export default defineComponent({
   name: 'main',

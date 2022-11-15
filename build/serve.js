@@ -1,5 +1,6 @@
 const esbuild = require('esbuild')
 const http = require('http')
+const esbuildPluginParcelCss = require('../plugins/esbuild-plugin-parcel-css')
 
 esbuild.serve({
   port: 4375,
@@ -17,6 +18,9 @@ esbuild.serve({
   },
   jsxFactory: 'h',
   jsxFragment: 'Fragment',
+  plugins: [
+    esbuildPluginParcelCss()
+  ],
   outfile: './dist/index.js'
 }).then((service) => {
   // console.log(`Esbuild serve at http://${service.host}:${service.port}.`)
