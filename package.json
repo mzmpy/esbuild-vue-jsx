@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node ./build/preBuild.js && node ./build/build.js",
-    "serve": "node ./build/preBuild.js && node ./build/serve.js"
+    "build": "node ./build/build.js",
+    "serve": "node ./build/serve.js"
   },
   "keywords": [
     "esbuild",

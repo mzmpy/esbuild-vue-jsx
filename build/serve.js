@@ -1,6 +1,8 @@
 const esbuild = require('esbuild')
 const http = require('http')
 const esbuildPluginParcelCss = require('../plugins/esbuild-plugin-parcel-css')
+const esbuildPluginHtml = require('../plugins/esbuild-plugin-html')
+const esbuildPluginAutoImport = require('../plugins/esbuild-plugin-elementplus-autoimport')
 
 esbuild.serve({
   port: 4375,
@@ -19,7 +21,13 @@ esbuild.serve({
   jsxFactory: 'h',
   jsxFragment: 'Fragment',
   plugins: [
-    esbuildPluginParcelCss()
+    esbuildPluginParcelCss({
+      cssModules: {
+        pattern: '[name]-[hash]-[local]'
+      }
+    }),
+    esbuildPluginHtml(),
+    esbuildPluginAutoImport()
   ],
   outfile: './dist/index.js'
 }).then((service) => {
