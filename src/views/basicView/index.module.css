@@ -1,0 +1,14 @@
+.input-box {
+  display: flex;
+}
+
+.input-box .input {
+  width: 300px !important;
+}
+
+.input-box span {
+  font-weight: 500;
+  color: #1a1d1f;
+  line-height: 32px;
+  padding: 0 5px;
+}

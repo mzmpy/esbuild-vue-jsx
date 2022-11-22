@@ -1,14 +1,12 @@
-.input-box {
-  display: flex;
+.nav {
+  width: fit-content;
+  padding: 7px;
 }
 
-.input-box .input {
-  width: 300px !important;
+.nav-item {
+  padding: 0 7px;
 }
 
-.input-box span {
-  font-weight: 500;
-  color: #1a1d1f;
-  line-height: 32px;
-  padding: 0 5px;
+.view {
+  padding: 0 14px;
 }

@@ -1,28 +1,47 @@
 import {
   defineComponent,
-  h, Fragment, ref
+  h, Fragment, ref,
+  KeepAlive
 } from 'vue'
-import { ElInput } from 'element-plus/components'
+import { RouterLink, RouterView } from 'vue-router'
 import styles from './App.module.css'
+import routesRef from './router/routes'
 
 export default defineComponent({
   name: 'App',
-  components: { ElInput },
   setup(props, ctx) {
-    const peopleName = ref('')
-
-    const onInput = (val) => {
-      peopleName.value = val
-    }
-
     return () => {
+
       return <>
-        <h1>
-          Hello { peopleName.value || 'World' }!
-        </h1>
-        <div class={ styles('inputBox') }>
-          <span>Name</span>
-          <ElInput class={ styles('input') } modelValue={ peopleName.value } onInput={ onInput } placeholder="World"></ElInput>
+        <div class={ styles('nav') }>
+          {
+            routesRef.map((item, index) => {
+              return <>
+                <span class={ styles('navItem') }>
+                  <RouterLink key={ index } to={ item.path }>{ item.name }</RouterLink>
+                </span>
+              </>
+            })
+          }
+        </div>
+        <div class={ styles('view') }>
+          {/* RouterView's v-slot syntax in jsx */}
+          {/* scoped slots
+              {
+                default: ({ Component, route }) => { ... }
+              }
+           */}
+          <RouterView>
+            {{
+              default: ({ Component, route }) => {
+                return <>
+                  <KeepAlive include={ 'BasicView' }>
+                    <Component></Component>
+                  </KeepAlive>
+                </>
+              }
+            }}
+          </RouterView>
         </div>
       </>
     }

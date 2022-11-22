@@ -10,7 +10,7 @@ module.exports = (options = {}) => {
 				const data = await fs.promises.readFile(filePath, { encoding: 'utf-8' })
         const regex = new RegExp(`(.*)${suffix.replace(/\./g, '\\.')}`)
         const cssSourcePath = path.relative(process.cwd(), filePath)
-        const namespace = cssSourcePath.match(regex)[1].replace(path.sep, '__').replace(/\./g, '_')
+        const namespace = cssSourcePath.match(regex)[1].replace(new RegExp(`\\${path.sep}`, 'g'), '__').replace(/\./g, '_')
 
         const filename = { namespace, basename: path.basename(cssSourcePath, suffix) }
 

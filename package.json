@@ -17,7 +17,8 @@
   "license": "ISC",
   "dependencies": {
     "element-plus": "^2.2.19",
-    "vue": "^3.2.41"
+    "vue": "^3.2.41",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@parcel/css": "^1.14.0",
