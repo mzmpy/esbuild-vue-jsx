@@ -1,6 +1,6 @@
 const path = require('path')
 
-module.exports = function esbuildPluginElementPlusAutoImport(options = { module: 'es' }) {
+module.exports = (options = { module: 'es' }) => {
   return {
     name: 'elementplus-autoimport',
     setup(build) {

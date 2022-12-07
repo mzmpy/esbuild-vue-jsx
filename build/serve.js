@@ -2,7 +2,7 @@ const esbuild = require('esbuild')
 const http = require('http')
 const esbuildPluginParcelCss = require('../plugins/esbuild-plugin-parcel-css')
 const esbuildPluginHtml = require('../plugins/esbuild-plugin-html')
-const esbuildPluginAutoImport = require('../plugins/esbuild-plugin-elementplus-autoimport')
+const esbuildPluginSmartImport = require('../plugins/esbuild-plugin-elementplus-smartimport')
 
 esbuild.serve({
   port: 4375,
@@ -27,7 +27,7 @@ esbuild.serve({
       }
     }),
     esbuildPluginHtml(),
-    esbuildPluginAutoImport()
+    esbuildPluginSmartImport()
   ],
   outfile: './dist/index.js'
 }).then((service) => {

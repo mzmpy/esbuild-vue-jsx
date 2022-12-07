@@ -1,7 +1,7 @@
 const esbuild = require('esbuild')
 const esbuildPluginParcelCss = require('../plugins/esbuild-plugin-parcel-css')
 const esbuildPluginHtml = require('../plugins/esbuild-plugin-html')
-const esbuildPluginAutoImport = require('../plugins/esbuild-plugin-elementplus-autoimport')
+const esbuildPluginSmartImport = require('../plugins/esbuild-plugin-elementplus-smartimport')
 
 esbuild.build({
   entryPoints: ['./src/index.js'],
@@ -23,7 +23,7 @@ esbuild.build({
     esbuildPluginHtml({
       filename: 'index.html'
     }),
-    esbuildPluginAutoImport()
+    esbuildPluginSmartImport()
   ],
   outfile: './dist/index.js'
 }).catch(() => process.exit(1))

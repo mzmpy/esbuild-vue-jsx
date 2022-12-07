@@ -22,7 +22,11 @@ module.exports = (options = {}) => {
 					inputSourceMap: options.inputSourceMap,
 					targets: options.targets,
 					drafts: options.drafts,
-					cssModules: suffix === '.module.css' && options.cssModules
+					cssModules: suffix === '.module.css' && options.cssModules,
+          analyzeDependencies: options.analyzeDependencies,
+          pseudoClasses: options.pseudoClasses,
+          unusedSymbols: options.unusedSymbols,
+          errorRecovery: options.errorRecovery
 				})
 
 				return {
