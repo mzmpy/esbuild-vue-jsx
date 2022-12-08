@@ -3,6 +3,7 @@ const http = require('http')
 const esbuildPluginParcelCss = require('../plugins/esbuild-plugin-parcel-css')
 const esbuildPluginHtml = require('../plugins/esbuild-plugin-html')
 const esbuildPluginSmartImport = require('../plugins/esbuild-plugin-elementplus-smartimport')
+const esbuildPluginJsxImportSource = require('../plugins/esbuild-plugin-jsx-import-source')
 
 esbuild.serve({
   port: 4375,
@@ -27,7 +28,10 @@ esbuild.serve({
       }
     }),
     esbuildPluginHtml(),
-    esbuildPluginSmartImport()
+    esbuildPluginSmartImport(),
+    esbuildPluginJsxImportSource({
+      jsxImportSource: 'vue'
+    })
   ],
   outfile: './dist/index.js'
 }).then((service) => {

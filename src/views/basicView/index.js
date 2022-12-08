@@ -1,6 +1,6 @@
 import {
   defineComponent,
-  h, Fragment, ref
+  ref
 } from 'vue'
 import { ElInput } from 'element-plus/components'
 import { zhCn } from 'element-plus/locale'

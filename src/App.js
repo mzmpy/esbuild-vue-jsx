@@ -1,11 +1,11 @@
 import {
   defineComponent,
-  h, Fragment, ref,
+  h, Fragment,
   KeepAlive
 } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import styles from './App.module.css'
-import routesRef from './router/routes'
+import routes from './router/routes'
 
 export default defineComponent({
   name: 'App',
@@ -15,7 +15,7 @@ export default defineComponent({
       return <>
         <div class={ styles('nav') }>
           {
-            routesRef.map((item, index) => {
+            routes.map((item, index) => {
               return <>
                 <span class={ styles('navItem') }>
                   <RouterLink key={ index } to={ item.path }>{ item.name }</RouterLink>
@@ -25,7 +25,7 @@ export default defineComponent({
           }
         </div>
         <div class={ styles('view') }>
-          {/* RouterView's v-slot syntax in jsx */}
+          {/* RouterView's v-slot syntax for jsx */}
           {/* scoped slots
               {
                 default: ({ Component, route }) => { ... }
