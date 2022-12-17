@@ -1,3 +1,5 @@
+/* With this script to create serving, we need to build first for the reason that esbuild.serve API do not support on-end callback. */
+
 const esbuild = require('esbuild')
 const http = require('http')
 const esbuildPluginParcelCss = require('../plugins/esbuild-plugin-parcel-css')

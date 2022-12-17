@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node ./build/build.js",
-    "serve": "node ./build/serve.js"
+    "eserve": "npm run build && node ./build/esbuildServe.js"
   },
   "keywords": [
     "esbuild",
@@ -23,6 +23,6 @@
   "devDependencies": {
     "@parcel/css": "^1.14.0",
     "@types/node": "^18.11.11",
-    "esbuild": "^0.15.12"
+    "esbuild": "^0.15.18"
   }
 }

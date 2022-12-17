@@ -5,54 +5,52 @@ module.exports = (options = {}) => {
   return {
     name: 'html-plugin',
     setup(build) {
-      const defaultTemplate = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <!-- inject stylesheet here! -->
-</head>
-<body>
-  <div id="app"></div>
-  <!-- inject jscode here! -->
-</body>
-</html>
-      `
-
+      // read esbuild's bundling configuration
       const configs = build.initialOptions
-      // configs.metafile = true
+      configs.metafile = true
 
-      const directory = options.aimdir
-        ? options.aimdir
-        : configs.outdir
-          ? configs.outdir
-          : path.dirname(configs.outfile)
+      const entryPoints = configs.entryPoints
 
-      const filename = options.filename
-        ? options.filename
-        : configs.outfile
-          ? path.basename(configs.outfile, path.extname(configs.outfile)) + '.html'
-          : 'index.html'
-      
-      const destination = { directory, filename }
+      build.onEnd(async (result) => {
+        const outputs = result.metafile.outputs
+        const outputsMap = {}
 
-      const destPath = path.resolve(destination.directory, destination.filename)
+        Object.keys(outputs).forEach((key) => {
+          if(!outputs[key].entryPoint) return
+          outputsMap[outputs[key].entryPoint] = {
+            generate: generatePath(key, '.html'),
+            outputPoint: key,
+            cssBundle: outputs[key].cssBundle || ''
+          }
+        })
 
-      build.onStart(async () => {
-        let template = defaultTemplate
-        
-        const jsReplace = '<!-- inject jscode here! --><script type="text/javascript" src="./index.js"></script>'
-        const styleReplace = '<!-- inject stylesheet here! --><link rel="stylesheet" href="./index.css"></link>'
-        
-        template = template
-          .replace('<!-- inject jscode here! -->', jsReplace)
-          .replace('<!-- inject stylesheet here! -->', styleReplace)
-        
-        await fs.promises.writeFile(destPath, template)
+        if(entryPoints instanceof Array) {
+          for(item of entryPoints) {
+            writeHtml('./default.html', outputsMap[path.posix.join(item)])
+          }
+        } else {
+          for(key in entryPoints) {
+            writeHtml('./default.html', outputsMap[path.posix.join(entryPoints[key])])
+          }
+        }
       })
     }
   }
+}
+
+function generatePath(sourcePath, suffix='') {
+  return path.posix.join(path.dirname(sourcePath), path.basename(sourcePath, path.extname(sourcePath)) + suffix)
+}
+
+async function writeHtml(sourceFile, info) {
+  let template = await fs.promises.readFile(path.resolve(__dirname, sourceFile), { encoding: 'utf-8' })
+            
+  const jsReplace = `<!-- inject jscode here! --><script type="text/javascript" src="./${path.basename(info.outputPoint)}"></script>`
+  const styleReplace = `<!-- inject stylesheet here! --><link rel="stylesheet" href="./${path.basename(info.cssBundle)}"></link>`
+  
+  template = template
+    .replace('<!-- inject jscode here! -->', jsReplace)
+    .replace('<!-- inject stylesheet here! -->', styleReplace)
+  
+  await fs.promises.writeFile(info.generate, template)
 }
