@@ -2,8 +2,8 @@
 
 const esbuild = require('esbuild')
 const http = require('http')
+const fs = require('fs')
 const esbuildPluginParcelCss = require('../plugins/esbuild-plugin-parcel-css')
-const esbuildPluginHtml = require('../plugins/esbuild-plugin-html')
 const esbuildPluginSmartImport = require('../plugins/esbuild-plugin-elementplus-smartimport')
 const esbuildPluginJsxImportSource = require('../plugins/esbuild-plugin-jsx-import-source')
 
@@ -29,7 +29,6 @@ esbuild.serve({
         pattern: '[name]-[hash]-[local]'
       }
     }),
-    esbuildPluginHtml(),
     esbuildPluginSmartImport(),
     esbuildPluginJsxImportSource({
       jsxImportSource: 'vue'
@@ -38,6 +37,9 @@ esbuild.serve({
   outfile: './dist/index.js'
 }).then((service) => {
   // console.log(`Esbuild serve at http://${service.host}:${service.port}.`)
+
+  fs.promises.copyFile('./static/index.html', './dist/index.html')
+
   const { host, port } = service
 
   http.createServer((req, res) => {

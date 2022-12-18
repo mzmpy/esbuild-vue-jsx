@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node ./build/build.js",
-    "eserve": "npm run build && node ./build/esbuildServe.js"
+    "eserve": "node ./build/esbuildServe.js",
+    "dev": "node ./build/serve/serve.js"
   },
   "keywords": [
     "esbuild",
@@ -23,6 +24,9 @@
   "devDependencies": {
     "@parcel/css": "^1.14.0",
     "@types/node": "^18.11.11",
-    "esbuild": "^0.15.18"
+    "esbuild": "^0.15.18",
+    "koa": "^2.14.1",
+    "koa-router": "^12.0.0",
+    "koa-static": "^5.0.0"
   }
 }
