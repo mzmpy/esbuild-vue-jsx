@@ -6,6 +6,6 @@ interface Options {
   module: moduleType
 }
 
-declare function esbuildPluginElementPlusSmartImport(options: Options & {}): Plugin
+declare function esbuildPluginElementPlusSmartImport(options: Options): Plugin
 
 export = esbuildPluginElementPlusSmartImport

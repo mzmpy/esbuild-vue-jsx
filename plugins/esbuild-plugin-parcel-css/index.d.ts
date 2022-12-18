@@ -7,6 +7,6 @@ interface Code {
 
 type Options = Omit<TransformOptions, keyof Code>
 
-declare function esbuildPluginParcelCss(options: Options & {}): Plugin
+declare function esbuildPluginParcelCss(options: Options): Plugin
 
 export = esbuildPluginParcelCss

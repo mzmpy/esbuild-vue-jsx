@@ -38,7 +38,23 @@ esbuild.serve({
 }).then((service) => {
   // console.log(`Esbuild serve at http://${service.host}:${service.port}.`)
 
-  fs.promises.copyFile('./static/index.html', './dist/index.html')
+  const template = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- inject stylesheet here! --><link rel="stylesheet" href="./index.css"></link>
+</head>
+<body>
+  <div id="app"></div>
+  <!-- inject jscode here! --><script type="text/javascript" src="./index.js"></script>
+</body>
+</html>
+`
+  fs.promises.writeFile('./dist/index.html', template)
 
   const { host, port } = service
 

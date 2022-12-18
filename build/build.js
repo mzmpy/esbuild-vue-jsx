@@ -22,7 +22,7 @@ esbuild.build({
       }
     }),
     esbuildPluginHtml({
-      filename: 'index.html'
+      source: './static/index.html'
     }),
     esbuildPluginSmartImport(),
     esbuildPluginJsxImportSource({

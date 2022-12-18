@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-module.exports = (options = {}) => {
+module.exports = (options) => {
   return {
     name: 'html-plugin',
     setup(build) {
@@ -24,13 +24,21 @@ module.exports = (options = {}) => {
           }
         })
 
-        if(entryPoints instanceof Array) {
-          for(item of entryPoints) {
-            writeHtml('./default.html', outputsMap[path.posix.join(item)])
-          }
-        } else {
+        if(isArray(entryPoints)) {
+          if(!(isArray(options.source) || isString(options.source)))
+            throw TypeError('[options.source] must be an array of paths or a path string.')
+          
+          entryPoints.forEach((item, index) => {
+            const sourceFile = isString(options.source) ? options.source : options.source[index]
+            writeHtml(path.relative(__dirname, sourceFile) || './default.html', outputsMap[path.posix.join(item)])
+          })
+        } else if(isObject(entryPoints)) {
+          if(!(isObject(options.source) || isString(options.source)))
+            throw TypeError('[options.source] must be an object of paths or a path string.')
+
           for(key in entryPoints) {
-            writeHtml('./default.html', outputsMap[path.posix.join(entryPoints[key])])
+            const sourceFile = isString(options.source) ? options.source : options.source[key]
+            writeHtml(path.relative(__dirname, sourceFile) || './default.html', outputsMap[path.posix.join(entryPoints[key])])
           }
         }
       })
@@ -53,4 +61,16 @@ async function writeHtml(sourceFile, info) {
     .replace('<!-- inject stylesheet here! -->', styleReplace)
   
   await fs.promises.writeFile(info.generate, template)
+}
+
+function isString(str) {
+  return typeof str === 'string'
+}
+
+function isObject(obj) {
+  return obj instanceof Object
+}
+
+function isArray(arr) {
+  return arr instanceof Array
 }

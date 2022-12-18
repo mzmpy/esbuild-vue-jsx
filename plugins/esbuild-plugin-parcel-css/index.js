@@ -2,7 +2,7 @@ const parcelCss = require('@parcel/css')
 const fs = require('fs')
 const path = require('path')
 
-module.exports = (options = {}) => {
+module.exports = (options) => {
 	return {
 		name: 'parcel-css-plugin',
 		setup(build) {
