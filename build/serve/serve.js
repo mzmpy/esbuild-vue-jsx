@@ -27,7 +27,6 @@ esbuild.build({
   jsxFragment: 'Fragment',
   watch: {
     onRebuild(error) {
-      timeInMS = new Date()
       if(error) {
         console.log(`\nWatch build failed: ${error}`)
       }
