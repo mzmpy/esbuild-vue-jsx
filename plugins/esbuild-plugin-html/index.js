@@ -47,7 +47,7 @@ module.exports = (options) => {
 }
 
 function generatePath(sourcePath, suffix='') {
-  return path.posix.join(path.dirname(sourcePath), path.basename(sourcePath, path.extname(sourcePath)) + suffix)
+  return path.join(path.dirname(sourcePath), path.basename(sourcePath, path.extname(sourcePath)) + suffix)
 }
 
 async function writeHtml(sourceFile, info) {
