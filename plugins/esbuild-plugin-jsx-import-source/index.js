@@ -20,10 +20,14 @@ module.exports = (options={ jsxImportSource: 'react' }) => {
         data = `export { ${jsxFactory}, ${jsxFragment} } from '${jsxImportSource}'`
         if(!fs.existsSync(injectPath)) fs.promises.writeFile(injectPath, data)
 
-        configs.inject instanceof Array
+        isArray(configs.inject)
         ? configs.inject.push(injectPath)
         : configs.inject = [injectPath]
       }
     }
   }
+}
+
+function isArray(arr) {
+  return arr instanceof Array
 }

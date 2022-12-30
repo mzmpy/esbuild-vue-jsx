@@ -30,7 +30,7 @@ module.exports = (options) => {
           
           entryPoints.forEach((item, index) => {
             const sourceFile = isString(options.source) ? options.source : options.source[index]
-            writeHtml(path.relative(__dirname, sourceFile) || './default.html', outputsMap[path.posix.join(item)])
+            writeHtml(path.relative(__dirname, sourceFile) || './default.html', outputsMap[path.posix.join(item)], options.module)
           })
         } else if(isObject(entryPoints)) {
           if(!(isObject(options.source) || isString(options.source)))
@@ -38,7 +38,7 @@ module.exports = (options) => {
 
           for(key in entryPoints) {
             const sourceFile = isString(options.source) ? options.source : options.source[key]
-            writeHtml(path.relative(__dirname, sourceFile) || './default.html', outputsMap[path.posix.join(entryPoints[key])])
+            writeHtml(path.relative(__dirname, sourceFile) || './default.html', outputsMap[path.posix.join(entryPoints[key])], options.module)
           }
         }
       })
@@ -50,10 +50,10 @@ function generatePath(sourcePath, suffix='') {
   return path.join(path.dirname(sourcePath), path.basename(sourcePath, path.extname(sourcePath)) + suffix)
 }
 
-async function writeHtml(sourceFile, info) {
+async function writeHtml(sourceFile, info, module=false) {
   let template = await fs.promises.readFile(path.resolve(__dirname, sourceFile), { encoding: 'utf-8' })
             
-  const jsReplace = `<!-- inject jscode here! --><script type="text/javascript" src="./${path.basename(info.outputPoint)}"></script>`
+  const jsReplace = `<!-- inject jscode here! --><script type="${module ? 'module' : 'text/javascript'}" src="./${path.basename(info.outputPoint)}"></script>`
   const styleReplace = `<!-- inject stylesheet here! --><link rel="stylesheet" href="./${path.basename(info.cssBundle)}"></link>`
   
   template = template
