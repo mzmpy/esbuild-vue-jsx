@@ -39,9 +39,9 @@ module.exports = (options) => {
 			const cssMap = new Map()
 
       build.onLoad({ filter: /(\.module)?\.css$/ }, async (args) => {
-        const regex = new RegExp(`node_modules\\${path.sep}.*`)
-        // exclude styles imported from 'node_modules/.*' from transforming into css module.
-        if(!options.cssModules || regex.test(args.path)) {
+        const isCssFiles = !/\.module\.css$/.test(path.basename(args.path))
+        // styles imported from files with postfix '.css' not transforming into css module.
+        if(!options.cssModules || isCssFiles) {
           const { css } = await transform(args.path)
           return {
             contents: css,
